@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     tools {
-        go 'go1.14'
+        go 'go1.17'
     }
     environment {
         GO114MODULE = 'on'
@@ -29,16 +29,23 @@ pipeline {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
                 sh 'go get ./...'
-                sh 'docker build . -t shadowshotx/product-go-micro'
+                sh 'docker build . -t imransetiadi22/golang'
             }
         }
         stage('Docker Push') {
             agent any
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
                 sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
-                sh 'docker push shadowshotx/product-go-micro'
+                sh 'docker push imransetiadi22/golang'
                 }
+            }
+        }
+        stage('Deploy to Cluster Kubernetes') {
+            steps {
+                echo 'Deploying....'
+                sh 'sudo kubectl apply -f deployment-golang.yaml'
+                sh 'sudo kubectl apply -f service-golang.yaml'
             }
         }
     }
