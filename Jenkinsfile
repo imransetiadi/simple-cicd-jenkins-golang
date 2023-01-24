@@ -29,7 +29,7 @@ pipeline {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
                 sh 'go get ./...'
-                sh 'docker build . -t imransetiadi22/golang'
+                sh 'docker build . -t imransetiadi22/golang:v1'
             }
         }
         stage('Docker Push') {
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
                 sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
-                sh 'docker push imransetiadi22/golang'
+                sh 'docker push imransetiadi22/golang:v1'
                 }
             }
         }
