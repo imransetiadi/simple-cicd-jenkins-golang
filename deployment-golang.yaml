@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-deployment # name of the deployment
+
+spec:
+  template: # pod defintion
+    metadata:
+      name: golang # name of the pod
+      labels:
+        app: golang
+        tier: frontend
+    spec:
+      containers:
+        - name: golang
+          image: imransetiadi/golang:latest
+  replicas: 3
+  selector: # Mandatory, Select the pods which needs to be in the replicaset
+    matchLabels:
+      app: golang
