@@ -6,8 +6,8 @@ metadata:
 spec:
   type: NodePort # Used for accessing a port externally
   ports:
-    - port: 5000 # Service port
-      targetPort: 5000 # Pod port, default: same as port
+    - port: 9090 # Service port
+      targetPort: 9090 # Pod port, default: same as port
       nodePort: 30009 # Node port which can be used externally, default: auto-assign any free port
   selector: # Which pods to expose externally ?
     app: golang
