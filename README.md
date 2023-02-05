@@ -1,4 +1,4 @@
-# Golang Server Project Best Practicess
+## Golang Server Project Best Practicess
 
 ### PS. Each Directory is a microservice and has its own Readme and each directory uses some new tech. So, do check it out.
 
